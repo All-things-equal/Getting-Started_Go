@@ -1,24 +1,22 @@
 /**
- * @demo 在包一层声明变量
+ * @demo 变量类型转换
  */
-
-/*
- Tips:
-      * 无法用 varName := value 的方式声明变量
-*/
 
 package main
 
-import "fmt"
-
-var (
-	name   string = "name"
-	number int    = 3
-	season int    = 11
+import (
+	"fmt"
+	"strconv"
 )
 
 func main() {
-	fmt.Println(name)
-	fmt.Println(number)
-	fmt.Println(season)
+	var i int = 42
+	fmt.Printf("%v, %T\n", i, i)
+
+	var j float32 = 0.0
+	j = float32(i)
+	fmt.Printf("%v, %T\n", j, j)
+
+	var s string = strconv.Itoa(i)
+	fmt.Printf("%v, %T\n", s, s)
 }
