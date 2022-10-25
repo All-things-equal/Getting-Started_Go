@@ -1,22 +1,37 @@
 /**
- * @demo 变量类型转换
+ * @demo 复数类型
  */
 
 package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func main() {
-	var i int = 42
-	fmt.Printf("%v, %T\n", i, i)
+	var n complex64 = 1 + 2i
 
-	var j float32 = 0.0
-	j = float32(i)
-	fmt.Printf("%v, %T\n", j, j)
+	fmt.Printf("%v, %T\n", n, n)
 
-	var s string = strconv.Itoa(i)
-	fmt.Printf("%v, %T\n", s, s)
+	n = 2i
+
+	fmt.Printf("%v, %T\n", real(n), real(n))
+	fmt.Printf("%v, %T\n", imag(n), imag(n))
+
+	var c complex128 = 1 + 2i
+
+	fmt.Printf("%v, %T\n", real(c), real(c))
+	fmt.Printf("%v, %T\n", imag(c), imag(c))
+
+	a := 1 + 2i
+	b := 2 + 5.2i
+
+	fmt.Println(a + b)
+	fmt.Println(a - b)
+	fmt.Println(a * b)
+	fmt.Println(a / b)
+
+	var x complex128 = complex(5, 12)
+
+	fmt.Printf("%v, %T\n", x, x)
 }
