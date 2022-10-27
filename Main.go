@@ -1,5 +1,5 @@
 /**
- * @demo 复数类型
+ * @demo 字符串
  */
 
 package main
@@ -9,29 +9,25 @@ import (
 )
 
 func main() {
-	var n complex64 = 1 + 2i
+	s := "this is a string"
 
-	fmt.Printf("%v, %T\n", n, n)
+	fmt.Printf("%v, %T\n", s, s)
 
-	n = 2i
+	fmt.Printf("%v, %T\n", s[2], s[2])
+	fmt.Printf("%v, %T\n", string(s[2]), s[2])
 
-	fmt.Printf("%v, %T\n", real(n), real(n))
-	fmt.Printf("%v, %T\n", imag(n), imag(n))
+	// ! cannot assign to s[2]
+	// s[2] = "u"
 
-	var c complex128 = 1 + 2i
+	s1 := "this is also a string"
 
-	fmt.Printf("%v, %T\n", real(c), real(c))
-	fmt.Printf("%v, %T\n", imag(c), imag(c))
+	fmt.Printf("%v, %T\n", s+s1, s+s1)
 
-	a := 1 + 2i
-	b := 2 + 5.2i
+	b := []byte(s)
 
-	fmt.Println(a + b)
-	fmt.Println(a - b)
-	fmt.Println(a * b)
-	fmt.Println(a / b)
+	fmt.Printf("%v, %T\n", b, b)
 
-	var x complex128 = complex(5, 12)
+	var r rune = 'a'
 
-	fmt.Printf("%v, %T\n", x, x)
+	fmt.Printf("%v, %T\n", r, r)
 }
