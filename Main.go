@@ -1,5 +1,5 @@
 /**
- * @demo 常量 --  const 关键字
+ * @demo 数组Array && 切片Slice
  */
 
 package main
@@ -8,87 +8,115 @@ import (
 	"fmt"
 )
 
-/* ****************************************
-枚举常量
-***************************************** */
-const (
-	a0 = iota
-	b1 = iota
-	c2 = iota
-)
-
-const (
-	_ = iota // 丢弃 枚举中的 0 值
-	catSpecialist
-	dogSpecialist
-	snakeSpecialist
-)
-
-/* ****************************************
-枚举常量 -- 文件大小的计量单位
-NotePad: 位运算参与枚举常量取值
-***************************************** */
-const (
-	_  = iota             // ignore first value by assigning to blank identifier
-	KB = 1 << (10 * iota) // == 1024
-	MB                    // == 1048576
-	GB                    // == 1073741824
-	TB                    // == 1099511627776
-	PB                    // == 1125899906842624
-	EB                    // == 1152921504606846976
-	ZB                    // == 1180591620717411303424
-	YB                    // == 1208925819614629174706176
-)
-
-/* ****************************************
-枚举常量 -- 比特位 表 布尔值-用户权限
-***************************************** */
-const (
-	isAdmin            = 1 << iota // == 1
-	isHeadquarters                 // == 2
-	canSeeFinancials               // == 4
-	canSeeAfrica                   // == 8
-	canSeeAsia                     // == 16
-	canSeeEurope                   // == 32
-	canSeeNorthAmerica             // == 64
-	canSeeSouthAmerica             // == 128
-)
-
 func main() {
-	const myConst int = 42
+	/*
+		* @demo 数组Array
+			NotePad:
+				* 数组是值类型
+				* 数组的长度是数组类型的一部分
+	*/
+	// 数组的实例化
+	var arr1 [5]int
+	arr2 := [3]int{1, 2, 3}
+	arr3 := [...]int{4, 5, 6, 7, 8}
+	var strTwoDimensional [4][5]string
 
-	fmt.Printf("%v, %T\n", myConst, myConst)
+	strTwoDimensional[2][3] = "hello"
 
-	const a = 42
-	var b int16 = 27
+	fmt.Println(arr1, arr2, arr3)
+	fmt.Println(strTwoDimensional, string(", length of strs is "), len(strTwoDimensional))
+	// ------------------------------
 
-	fmt.Printf("%v, %T\n", a+b, a+b) // const 隐式类型转换
-	// ----------------------------------------
+	// 数组的遍历
+	for i := 0; i < len(arr3); i++ {
+		fmt.Printf("arr3[%d] = %d\t", i, arr3[i])
+	}
+	fmt.Println()
 
-	// 枚举常量 demo
-	fmt.Printf("%v, %T\n", a0, a0)
-	fmt.Printf("%v, %T\n", b1, b1)
-	fmt.Printf("%v, %T\n", c2, c2)
+	for i := range arr3 {
+		fmt.Printf("arr3[%d] = %d\t", i, arr3[i])
+	}
+	fmt.Println()
 
-	var specialistType_1 int
-	var specialistType_2 int = catSpecialist
+	for i, v := range arr3 {
+		fmt.Printf("arr3[%d] = %d\t", i, v)
+	}
+	fmt.Println()
+	// ------------------------------
 
-	fmt.Printf("%v\n", specialistType_1 == catSpecialist)
-	fmt.Printf("%v\n", specialistType_2 == catSpecialist)
-	// ----------------------------------------
+	a := [...]int{1, 2, 3}
+	b := a // NotePad: 数组是值类型，赋值和传参会复制整个数组
 
-	// 文件大小转换
-	fileSize := 4000000000.
+	b[1] = 100
 
-	fmt.Printf("%.2fGB\n", fileSize/GB)
-	// ----------------------------------------
+	fmt.Printf("Array a: %v\n", a)
+	fmt.Printf("Array b: %v\n", b)
+	// ------------------------------
 
-	// 位或运算实现比特位的布尔值
-	var roles byte = isAdmin | canSeeFinancials | canSeeEurope
+	/*
+		* @demo 切片Slice
+			NotePad:
+				* 切片是数组的一个引用
+				* 切片是引用类型
+	*/
+	s := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
-	fmt.Printf("%b\n", roles)
-	// 位与运算取回特定比特位的值
-	fmt.Printf("Is Admin? %v\n", isAdmin&roles == isAdmin)
-	fmt.Printf("Is HQ? %v\n", isHeadquarters&roles == isHeadquarters)
-	// ----------------------------------------
+	fmt.Printf("s = %v, len(s) = %d, cap(s) = %d\n", s, len(s), cap(s))
+
+	p := s // NotePad: 切片是引用类型，赋值和传参不会复制底层数组
+
+	p[1] = 100
+
+	fmt.Printf("s = %v, len(s) = %d, cap(s) = %d\n", s, len(s), cap(s))
+	fmt.Printf("p = %v, len(p) = %d, cap(p) = %d\n", p, len(p), cap(p))
+
+	// 切片的实例化
+	s1 := s[:]   // slice of all elements
+	s2 := s[3:]  // slice from 4th to end
+	s3 := s[:6]  // slice first 6 elements
+	s4 := s[3:6] // slice the 4th, 5th, and 6th elements
+
+	s4[2] = 200
+
+	fmt.Printf("s1 = %v, len(s1) = %d, cap(s1) = %d\n", s1, len(s1), cap(s1))
+	fmt.Printf("s2 = %v, len(s2) = %d, cap(s2) = %d\n", s2, len(s2), cap(s2))
+	fmt.Printf("s3 = %v, len(s3) = %d, cap(s3) = %d\n", s3, len(s3), cap(s3))
+	fmt.Printf("s4 = %v, len(s4) = %d, cap(s4) = %d\n", s4, len(s4), cap(s4))
+
+	// 使用make函数实例化切片
+	s5 := make([]int, 5, 10) // NotePad: make([]T, size, cap)
+
+	fmt.Printf("s5 = %v, len(s5) = %d, cap(s5) = %d\n", s5, len(s5), cap(s5))
+
+	// 使用 append() 函数向切片中追加元素
+	s6 := []int{}
+
+	fmt.Printf("s6 = %v\n", s6)
+	fmt.Printf("Length: %v\n", len(s6))
+	fmt.Printf("Capacity: %v\n", cap(s6))
+
+	s6 = append(s6, 1)
+	fmt.Printf("s6 = %v\n", s6)
+	fmt.Printf("Length: %v\n", len(s6))
+	fmt.Printf("Capacity: %v\n", cap(s6))
+
+	s6 = append(s6, 2, 3, 4, 5)
+	fmt.Printf("s6 = %v\n", s6)
+	fmt.Printf("Length: %v\n", len(s6))
+	fmt.Printf("Capacity: %v\n", cap(s6))
+
+	s6 = append(s6, []int{6, 7, 8, 9, 10}...)
+	fmt.Printf("s6 = %v\n", s6)
+	fmt.Printf("Length: %v\n", len(s6))
+	fmt.Printf("Capacity: %v\n", cap(s6))
+
+	// 从数组中删除一个元素, 有破环性的 ！！！
+	s7 := []int{1, 2, 3, 4, 5}
+	fmt.Printf("s7 = %v\n", s7)
+
+	s8 := append(s7[:2], s7[3:]...)
+
+	fmt.Printf("s8 = %v\n", s8)
+	fmt.Printf("s7 = %v\n", s7)
+	// ------------------------------
 }
